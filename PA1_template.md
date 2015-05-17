@@ -1,13 +1,9 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 ## Init directories and load required libraries
 
-```{r, echo=TRUE}
+
+```r
 setwd('/home/babl/coursera/Reproducible_Research/pa1')
 library(data.table)
 library(ggplot2)
@@ -17,7 +13,8 @@ library(gridExtra)
 
 ## Loading and preprocessing the data
 
-```{r,echo=TRUE}
+
+```r
 data<-data.table(read.csv("activity.csv", header=TRUE, na.strings="NA"))
 ```
 
@@ -25,7 +22,8 @@ data<-data.table(read.csv("activity.csv", header=TRUE, na.strings="NA"))
 
 ### Make a histogram of the total number of steps taken each day
 
-```{r,echo=TRUE}
+
+```r
 total_steps_by_date <- aggregate(steps ~ date, data, 'sum', na.rm=TRUE)
 mean_steps_by_date <- aggregate(steps ~ date, data, 'mean', na.rm=TRUE)
 
@@ -40,20 +38,33 @@ plot2 <- ggplot(total_steps_by_date, aes(x=steps)) +
 grid.arrange(plot1,plot2,ncol=2)
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+
 ### Calculate and report the mean and median total number of steps taken per day
 
-```{r, echo=TRUE}
+
+```r
 mean<-mean(total_steps_by_date$steps,na.rm=TRUE)
 median<-median(total_steps_by_date$steps,na.rm=TRUE)
 ```
-```{r, echo=TRUE}
+
+```r
 print(mean)
 ```
-```{r, echo=TRUE}
+
+```
+## [1] 10766.19
+```
+
+```r
 print(median)
 ```
 
-The mean of total number of steps taken per day are `r mean` and median are `r median`.
+```
+## [1] 10765
+```
+
+The mean of total number of steps taken per day are 1.0766189\times 10^{4} and median are 10765.
 
 ## What is the average daily activity pattern?
 
