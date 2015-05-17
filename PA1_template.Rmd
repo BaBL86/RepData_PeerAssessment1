@@ -9,6 +9,15 @@ output:
 
 ```{r, echo=TRUE}
 setwd('/home/babl/coursera/Reproducible_Research/pa1')
+```
+
+I'm from Russia and need to set Eng locale to correctly work with date/time functions.
+
+```{r, echo=TRUE}
+Sys.setlocale("LC_TIME","en_US.UTF-8")
+```
+
+```{r, echo=TRUE}
 library(data.table)
 library(ggplot2)
 library(grid)
@@ -141,4 +150,15 @@ kable(head(differ_data), format = "markdown")
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
+I'm continue to work with extrapolated_data.
 
+Create new columns `wday` and `factorday` to extract weekend days from others:
+
+```{r, echo=TRUE}
+weekend <- c('saturday','sunday')
+extrapolated_data$wday<-tolower(weekdays(strptime(extrapolated_data$date, '%Y-%m-%d')))
+extrapolated_data$factorday <- factor((extrapolated_data$wday %in% weekend), labels=c('weekday','weekend'))
+ex_steps_by_interval <- aggregate(steps ~ interval + factorday, extrapolated_data, 'mean')
+
+ggplot(ex_steps_by_interval, aes(x = interval, y = steps)) + geom_line() + facet_grid(factorday ~ .) + labs(x="Interval", y="Number of steps")
+```

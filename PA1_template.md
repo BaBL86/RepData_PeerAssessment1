@@ -5,6 +5,21 @@
 
 ```r
 setwd('/home/babl/coursera/Reproducible_Research/pa1')
+```
+
+I'm from Russia and need to set Eng locale to correctly work with date/time functions.
+
+
+```r
+Sys.setlocale("LC_TIME","en_US.UTF-8")
+```
+
+```
+## [1] "en_US.UTF-8"
+```
+
+
+```r
 library(data.table)
 library(ggplot2)
 library(grid)
@@ -41,7 +56,7 @@ plot2 <- ggplot(total_steps_by_date, aes(x=steps)) +
 grid.arrange(plot1,plot2,ncol=2)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
 
 ### Calculate and report the mean and median total number of steps taken per day
 
@@ -77,7 +92,7 @@ mean_steps_by_interval <- aggregate(steps ~ interval, data, 'mean', na.rm=TRUE)
 ggplot(mean_steps_by_interval, aes(x = interval, y = steps)) + geom_line()
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-7-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
 
 Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -141,7 +156,7 @@ plot2 <- ggplot(ex_total_steps_by_date, aes(x=steps)) +
 grid.arrange(plot1,plot2,ncol=2)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-11-1.png) 
+![](PA1_template_files/figure-html/unnamed-chunk-13-1.png) 
 
 ### Calculate and report the mean and median total number of steps taken per day.
 
@@ -172,7 +187,7 @@ The mean of total number of steps taken per day are 1.0766189\times 10^{4} and m
 
 ### Do these values differ from the estimates from the first part of the assignment?
 
-Yes, this values are differ:
+Yes, median values are differ, but not mean values, because of we fill NA values with mean data:
 
 
 ```r
@@ -187,5 +202,32 @@ kable(head(differ_data), format = "markdown")
 |Without NA   | 10766.19| 10765.00|
 |Extrapolated | 10766.19| 10766.19|
 
-
 ## Are there differences in activity patterns between weekdays and weekends?
+
+I'm continue to work with extrapolated_data.
+
+Create new columns `wday` and `factorday` to extract weekend days from others:
+
+
+```r
+weekend <- c('saturday','sunday')
+extrapolated_data$wday<-tolower(weekdays(strptime(extrapolated_data$date, '%Y-%m-%d')))
+extrapolated_data$factorday <- factor((extrapolated_data$wday %in% weekend), labels=c('weekday','weekend'))
+ex_steps_by_interval <- aggregate(steps ~ interval + factorday, extrapolated_data, 'mean')
+
+ggplot(ex_steps_by_interval, aes(x = interval, y = steps)) + geom_line() + facet_grid(factorday ~ .)
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-18-1.png) 
+
+
+
+
+
+
+
+
+
+
+
+
