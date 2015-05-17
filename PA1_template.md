@@ -1,4 +1,9 @@
-# Reproducible Research: Peer Assessment 1
+---
+title: "Reproducible Research: Peer Assessment 1"
+output: 
+  html_document:
+    keep_md: true
+---
 
 ## Init directories and load required libraries
 
@@ -56,7 +61,7 @@ plot2 <- ggplot(total_steps_by_date, aes(x=steps)) +
 grid.arrange(plot1,plot2,ncol=2)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
 
 ### Calculate and report the mean and median total number of steps taken per day
 
@@ -82,7 +87,7 @@ print(median)
 ## [1] 10765
 ```
 
-The mean of total number of steps taken per day are 1.0766189\times 10^{4} and median are 10765.
+The mean of total number of steps taken per day are 1.0766189 &times; 10<sup>4</sup> and median are 10765.
 
 ## What is the average daily activity pattern?
 
@@ -92,7 +97,7 @@ mean_steps_by_interval <- aggregate(steps ~ interval, data, 'mean', na.rm=TRUE)
 ggplot(mean_steps_by_interval, aes(x = interval, y = steps)) + geom_line()
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-9-1.png) 
+![plot of chunk unnamed-chunk-9](figure/unnamed-chunk-9-1.png) 
 
 Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -156,7 +161,7 @@ plot2 <- ggplot(ex_total_steps_by_date, aes(x=steps)) +
 grid.arrange(plot1,plot2,ncol=2)
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-13-1.png) 
+![plot of chunk unnamed-chunk-13](figure/unnamed-chunk-13-1.png) 
 
 ### Calculate and report the mean and median total number of steps taken per day.
 
@@ -183,7 +188,7 @@ print(ex_median)
 ## [1] 10766.19
 ```
 
-The mean of total number of steps taken per day are 1.0766189\times 10^{4} and median are 1.0766189\times 10^{4}.
+The mean of total number of steps taken per day are 1.0766189 &times; 10<sup>4</sup> and median are 1.0766189 &times; 10<sup>4</sup>.
 
 ### Do these values differ from the estimates from the first part of the assignment?
 
@@ -215,19 +220,7 @@ extrapolated_data$wday<-tolower(weekdays(strptime(extrapolated_data$date, '%Y-%m
 extrapolated_data$factorday <- factor((extrapolated_data$wday %in% weekend), labels=c('weekday','weekend'))
 ex_steps_by_interval <- aggregate(steps ~ interval + factorday, extrapolated_data, 'mean')
 
-ggplot(ex_steps_by_interval, aes(x = interval, y = steps)) + geom_line() + facet_grid(factorday ~ .)
+ggplot(ex_steps_by_interval, aes(x = interval, y = steps)) + geom_line() + facet_grid(factorday ~ .) + labs(x="Interval", y="Number of steps")
 ```
 
-![](PA1_template_files/figure-html/unnamed-chunk-18-1.png) 
-
-
-
-
-
-
-
-
-
-
-
-
+![plot of chunk unnamed-chunk-18](figure/unnamed-chunk-18-1.png) 
