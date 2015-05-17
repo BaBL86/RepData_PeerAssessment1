@@ -57,6 +57,10 @@ The mean of total number of steps taken per day are `r mean` and median are `r m
 
 ## What is the average daily activity pattern?
 
+```{r, echo=TRUE}
+mean_steps_by_interval <- aggregate(steps ~ interval, data, 'mean', na.rm=TRUE)
+ggplot(mean_steps_by_interval, aes(x = interval, y = steps)) + geom_line()
+```
 
 
 ## Imputing missing values

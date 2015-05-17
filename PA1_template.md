@@ -69,6 +69,13 @@ The mean of total number of steps taken per day are 1.0766189\times 10^{4} and m
 ## What is the average daily activity pattern?
 
 
+```r
+mean_steps_by_interval <- aggregate(steps ~ interval, data, 'mean', na.rm=TRUE)
+ggplot(mean_steps_by_interval, aes(x = interval, y = steps)) + geom_line()
+```
+
+![](PA1_template_files/figure-html/unnamed-chunk-7-1.png) 
+
 
 ## Imputing missing values
 
